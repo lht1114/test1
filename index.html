@@ -24,12 +24,12 @@
 <script type="text/javascript">
 	$(function () {
 		$.ajax({
+			url: 'https://yszyb.ysepay.com/zyb_interface/weChatPaymentAction/jsapiSign.action',
 			type: "get",
 			async: false,
 			dataType:'jsonp',
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			url: 'https://yszyb.ysepay.com/zyb_interface/weChatPaymentAction/jsapiSign.action',
-			success: (res) => {
+			success: function(res) {
 				console.log(res)
 				var data = JSON.parse(res)
 				console.log(data)
@@ -48,6 +48,9 @@
 				wx.error(function () {
 					console.log('失败')
 				})
+			},
+			error: function(err) {
+				console.log(err)
 			}
 
 		})
