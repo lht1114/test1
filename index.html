@@ -24,12 +24,13 @@
 <script type="text/javascript">
 	$(function () {
 		$.ajax({
-			type: "post",
-			async: true,
+			type: "get",
+			async: false,
 			dataType:'jsonp',
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			url: 'https://yszyb.ysepay.com/zyb_interface/weChatPaymentAction/jsapiSign.action',
 			success: (res) => {
+				console.log(res)
 				var data = JSON.parse(res)
 				console.log(data)
 				wx.config({
