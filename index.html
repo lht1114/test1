@@ -26,6 +26,7 @@
 		$.ajax({
 			type: "post",
 			async: true,
+			dataType:'jsonp',
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			url: 'https://yszyb.ysepay.com/zyb_interface/weChatPaymentAction/jsapiSign.action',
 			success: (res) => {
