@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>H5跳转微信</title>
+</head>
+
+<body>
+	<wx-open-launch-weapp id="launch-btn" username="gh_83cfb273c5ff"
+		path="pages/home/home">
+		<div class="btn" style="display: block;">立即前往小程序</div>
+	</wx-open-launch-weapp>
+	<script>
+		var btn = document.getElementById('launch-btn');
+		btn.addEventListener('launch', function (e) {
+			alert("成功")
+		});
+	</script>
+</body>
+
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$.get('https://yszyb.ysepay.com/zyb_interface/weChatPaymentAction/jsapiSign.action', function (res) {
+			var data = JSON.parse(res)
+			console.log(data)
+			wx.config({
+				debug: true,
+				appId: data.appId,
+				timestamp: data.timestamp,
+				nonceStr: data.nonceStr,
+				signature: data.signature,
+				jsApiList: ["startRecord", "stopRecord", "onVoiceRecordEnd", "playVoice", "pauseVoice", "stopVoice", "onVoicePlayEnd", "uploadVoice", "downloadVoice", "chooseImage", "previewImage", "uploadImage", "downloadImage", "translateVoice", "getNetworkType", "openLocation", "getLocation"],//必须要 不调用小程序标签渲染不出来
+				openTagList: ['wx-open-launch-weapp']
+			});
+			wx.ready(function() {
+				console.log('成功')
+			})
+			wx.error(function() {
+				console.log('失败')
+			})
+		})
+	})
+</script>
+
+</html>
