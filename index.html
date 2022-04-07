@@ -7,8 +7,7 @@
 </head>
 
 <body>
-	<wx-open-launch-weapp id="launch-btn" username="gh_83cfb273c5ff"
-		path="pages/home/home">
+	<wx-open-launch-weapp id="launch-btn" username="gh_83cfb273c5ff" path="pages/home/home">
 		<div class="btn" style="display: block;">立即前往小程序</div>
 	</wx-open-launch-weapp>
 	<script>
@@ -23,24 +22,31 @@
 <script src="https://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script type="text/javascript">
 	$(function () {
-		$.get('https://yszyb.ysepay.com/zyb_interface/weChatPaymentAction/jsapiSign.action', function (res) {
-			var data = JSON.parse(res)
-			console.log(data)
-			wx.config({
-				debug: true,
-				appId: data.appId,
-				timestamp: data.timestamp,
-				nonceStr: data.nonceStr,
-				signature: data.signature,
-				jsApiList: ["startRecord", "stopRecord", "onVoiceRecordEnd", "playVoice", "pauseVoice", "stopVoice", "onVoicePlayEnd", "uploadVoice", "downloadVoice", "chooseImage", "previewImage", "uploadImage", "downloadImage", "translateVoice", "getNetworkType", "openLocation", "getLocation"],//必须要 不调用小程序标签渲染不出来
-				openTagList: ['wx-open-launch-weapp']
-			});
-			wx.ready(function() {
-				console.log('成功')
-			})
-			wx.error(function() {
-				console.log('失败')
-			})
+		$.ajax({
+			type: "post",
+			async: true,
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			url: 'https://yszyb.ysepay.com/zyb_interface/weChatPaymentAction/jsapiSign.action',
+			success: (res) => {
+				var data = JSON.parse(res)
+				console.log(data)
+				wx.config({
+					debug: true,
+					appId: data.appId,
+					timestamp: data.timestamp,
+					nonceStr: data.nonceStr,
+					signature: data.signature,
+					jsApiList: ['scanQRCode', 'chooseImage', 'getLocalImgData', 'getLocation'],//必须要 不调用小程序标签渲染不出来
+					openTagList: ['wx-open-launch-weapp']
+				});
+				wx.ready(function () {
+					console.log('成功')
+				})
+				wx.error(function () {
+					console.log('失败')
+				})
+			}
+
 		})
 	})
 </script>
